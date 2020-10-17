@@ -10,7 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-   private EditText sname;
+   private EditText sroll;
    private EditText spass;
    private TextView failed;
    private Button login;
@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //connecting variables to their respective widget using id in activity main file
-        sname = (EditText)findViewById(R.id.username);
+        sroll = (EditText)findViewById(R.id.username);
         //typecasting in EditText incase we see any error due to the input
         spass = (EditText)findViewById(R.id.password);
         failed = findViewById(R.id.textv);
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //get the name and password given by the user
                 //converted into string
-                String ipname = sname.getText().toString();
+                String ipname = sroll.getText().toString();
                 String ippass = spass.getText().toString();
                 //checking whether the user gave any input or not
                 if(ipname.isEmpty() || ippass.isEmpty()){
