@@ -55,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
 
                         Toast.makeText(MainActivity.this, "You have entered a wrong username or password",Toast.LENGTH_SHORT).show();
                         if(counter == 0){
+                            Toast.makeText(MainActivity.this, "You have entered a wrong username or password 5 times, Contact your advisor",Toast.LENGTH_SHORT).show();
+                            login.setEnabled(false);
+                            //disabling LOGIN button after 5 attemts
 
                         }
 
