@@ -5,6 +5,10 @@
     android:layout_height="match_parent"
     android:padding="15dp"
     tools:context=".UploadNotice">
+
+    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
     <!--<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
