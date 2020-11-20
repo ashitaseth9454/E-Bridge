@@ -1,42 +1,34 @@
 {
   "project_info": {
-    "project_number": "239780707123",
-    "firebase_url": "https://e-bridge-5a579.firebaseio.com",
-    "project_id": "e-bridge-5a579",
-    "storage_bucket": "e-bridge-5a579.appspot.com"
+    "project_number": "340200190345",
+    "firebase_url": "https://e-bridge-glau.firebaseio.com",
+    "project_id": "e-bridge-glau",
+    "storage_bucket": "e-bridge-glau.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:239780707123:android:bf8eada3fe0e623dc4dc46",
+        "mobilesdk_app_id": "1:340200190345:android:e55a8b79c77847b6bf3158",
         "android_client_info": {
           "package_name": "com.example.e_bridge"
         }
       },
       "oauth_client": [
         {
-          "client_id": "239780707123-9akp9edquhn3fkj5mimn5t1s5skobh7t.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.e_bridge",
-            "certificate_hash": "854d5b0e3dc7e6cd58852e48ca433cd1ddb76fae"
-          }
-        },
-        {
-          "client_id": "239780707123-04mnl14dc1ujglh3qu4mjoanm4c50ofp.apps.googleusercontent.com",
+          "client_id": "340200190345-2g5mpjkcikp29ghqfnmt077tatm0pi37.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBgD93h7-46cM2mkf1AyYPfI7viOFoHTIw"
+          "current_key": "AIzaSyCi6qaIY9U7woAZ8nylSB7xaXofg5MUH1w"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "239780707123-04mnl14dc1ujglh3qu4mjoanm4c50ofp.apps.googleusercontent.com",
+              "client_id": "340200190345-2g5mpjkcikp29ghqfnmt077tatm0pi37.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
