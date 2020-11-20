@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         //connecting variables to their respective widget using id in activity main file
        /* sroll = (EditText)findViewById(R.id.username);
         //typecasting in EditText incase we see any error due to the input
+        // test message commit
         spass = (EditText)findViewById(R.id.password);
         failed = findViewById(R.id.textv);
         login = findViewById(R.id.button2);
