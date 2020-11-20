@@ -42,6 +42,37 @@ public class UploadingNotices extends AppCompatActivity {
 
             }
         });
+        uploadNoticeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (noticeTitle.getText().toString().isEmpty()) {
+                    noticeTitle.setError("Empty!");
+                    noticeTitle.requestFocus();
+                    //if empty the it will focus on edit text view, so that the user can write the title
+
+                }
+                //checking if image is uploaded or not (we have used Bitmap)
+                else if (image == null) {
+                    uploadData();
+                } else {
+                    uploadNotice();
+
+                }
+            }
+        });
+    }
+
+    //if the user have not uploaded any image (only title)
+    private void uploadData() {
+
+
+    }
+
+
+    //the user has uploaded both image nad title
+    private void uploadNotice() {
+
+
     }
 
     private void openGallery() {
