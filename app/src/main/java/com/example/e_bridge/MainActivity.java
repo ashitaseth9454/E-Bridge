@@ -1,32 +1,30 @@
 package com.example.e_bridge;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
-   private EditText sroll;
-   private EditText spass;
-   private TextView failed;
-   private Button login;
+    boolean valid = false;
+    private EditText sroll;
+    private EditText spass;
+    private TextView failed;
 
 
     private String testname = "181500145";
     private String testpass = "12345";
-    private int counter =5;
-    boolean valid=false;
+    private Button login;
+    private int counter = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //connecting variables to their respective widget using id in activity main file
-        sroll = (EditText)findViewById(R.id.username);
+       /* sroll = (EditText)findViewById(R.id.username);
         //typecasting in EditText incase we see any error due to the input
         spass = (EditText)findViewById(R.id.password);
         failed = findViewById(R.id.textv);
@@ -67,10 +65,10 @@ public class MainActivity extends AppCompatActivity {
                 }
 
             }
-        });
+        });*/
 
     }
-    private boolean checkCred(String name, String pass){
+   /* private boolean checkCred(String name, String pass){
         //making it case sensitive
         if(name.equals(testname) && pass.equals(testpass)){
             //returning true only if both passwords and username are correct
@@ -81,4 +79,5 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+}*/
 }
