@@ -6,6 +6,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
@@ -19,6 +21,8 @@ public class UploadingNotices extends AppCompatActivity {
     CardView selectImage;
     ImageView imageView;
     Bitmap image;
+    EditText noticeTitle;
+    Button uploadNoticeButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +31,8 @@ public class UploadingNotices extends AppCompatActivity {
 
         selectImage = (CardView) findViewById(R.id.selectImage);
         imageView = (ImageView) findViewById(R.id.noticeImageView);
+        noticeTitle = (EditText) findViewById(R.id.noticeTitle);
+        uploadNoticeButton = (Button) findViewById(R.id.uploadNoticeButton);
 
         selectImage.setOnClickListener(new View.OnClickListener() {
             //starting mainbhi laga skte the par hamko bas ek hi bulana hai
