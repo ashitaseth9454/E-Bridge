@@ -9,11 +9,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public class UploadingNotices extends AppCompatActivity {
@@ -23,6 +35,9 @@ public class UploadingNotices extends AppCompatActivity {
     Bitmap image;
     EditText noticeTitle;
     Button uploadNoticeButton;
+    DatabaseReference databaseReference;
+    StorageReference storageReference;
+    String downloadImageURL = "";//if no image is uploaded then it will send empty String
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +48,8 @@ public class UploadingNotices extends AppCompatActivity {
         imageView = (ImageView) findViewById(R.id.noticeImageView);
         noticeTitle = (EditText) findViewById(R.id.noticeTitle);
         uploadNoticeButton = (Button) findViewById(R.id.uploadNoticeButton);
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        storageReference = FirebaseStorage.getInstance().getReference();
 
         selectImage.setOnClickListener(new View.OnClickListener() {
             //starting mainbhi laga skte the par hamko bas ek hi bulana hai
@@ -54,23 +71,58 @@ public class UploadingNotices extends AppCompatActivity {
                 //checking if image is uploaded or not (we have used Bitmap)
                 else if (image == null) {
                     uploadData();
+                    //directly storing title
                 } else {
-                    uploadNotice();
+                    uploadImage();
+                    //converting(compressing) image and storing it
 
                 }
             }
         });
     }
 
-    //if the user have not uploaded any image (only title)
+    //storing data on firebase
     private void uploadData() {
+        databaseReference = databaseReference.child("Notice");
+        final String uniqueKey = databaseReference.push().getKey();
 
 
     }
 
 
-    //the user has uploaded both image nad title
-    private void uploadNotice() {
+    //if the user have not uploaded any image (only title)
+    private void uploadImage() {
+        //compressing the image nad then storing it
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
+        byte[] finalImage = byteArrayOutputStream.toByteArray();
+        final StorageReference filePath;
+        //storing in firebase
+        filePath = storageReference.child("Notice").child(finalImage + "jpg");
+        final UploadTask uploadTask = filePath.putBytes(finalImage);
+        uploadTask.addOnCompleteListener(UploadingNotices.this, new OnCompleteListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                if (task.isSuccessful()) {
+                    uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            filePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    downloadImageURL = String.valueOf(uri);
+                                    uploadData();
+                                }
+                            });
+                        }
+                    });
+
+
+                } else {
+                    Toast.makeText(UploadingNotices.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
 
     }
