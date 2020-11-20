@@ -1,5 +1,6 @@
 package com.example.e_bridge;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -17,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
@@ -27,6 +29,8 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class UploadingNotices extends AppCompatActivity {
     private final int REQ = 1;
@@ -38,6 +42,7 @@ public class UploadingNotices extends AppCompatActivity {
     DatabaseReference databaseReference;
     StorageReference storageReference;
     String downloadImageURL = "";//if no image is uploaded then it will send empty String
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +55,7 @@ public class UploadingNotices extends AppCompatActivity {
         uploadNoticeButton = (Button) findViewById(R.id.uploadNoticeButton);
         databaseReference = FirebaseDatabase.getInstance().getReference();
         storageReference = FirebaseStorage.getInstance().getReference();
+        progressDialog = new ProgressDialog(this);
 
         selectImage.setOnClickListener(new View.OnClickListener() {
             //starting mainbhi laga skte the par hamko bas ek hi bulana hai
@@ -85,6 +91,43 @@ public class UploadingNotices extends AppCompatActivity {
     private void uploadData() {
         databaseReference = databaseReference.child("Notice");
         final String uniqueKey = databaseReference.push().getKey();
+        String title = noticeTitle.getText().toString();
+
+        Calendar calForDate = Calendar.getInstance();
+        SimpleDateFormat currentDate = new SimpleDateFormat("dd-MM-yy");
+        //as we use mm for minutes
+        String date = currentDate.format(calForDate.getTime());//only for date as only date will be stored in dd-MM-yy format
+
+        //for time
+        Calendar calForTime = Calendar.getInstance();
+        SimpleDateFormat currentTime = new SimpleDateFormat("hh:mm a");
+        //a for AM and PM
+
+        String time = currentTime.format(calForTime.getTime());
+
+        //passing arguments to the notice data class
+        NoticeData noticeData = new NoticeData(title, downloadImageURL, date, time, uniqueKey);
+        /*title-notice title
+        downloadImageUrl= Bitmao image compressed and converted to url
+        date= dat
+        time=time
+        uniqueKey =key
+        * */
+        //passsing and storing data in firebase
+        databaseReference.child(uniqueKey).setValue(noticeData).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                progressDialog.dismiss();
+                Toast.makeText(UploadingNotices.this, "Notice Uploaded", Toast.LENGTH_SHORT).show();
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                progressDialog.dismiss();
+                Toast.makeText(UploadingNotices.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
     }
@@ -92,6 +135,8 @@ public class UploadingNotices extends AppCompatActivity {
 
     //if the user have not uploaded any image (only title)
     private void uploadImage() {
+        progressDialog.setMessage("Uploading...");
+        progressDialog.show();
         //compressing the image nad then storing it
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
@@ -119,6 +164,7 @@ public class UploadingNotices extends AppCompatActivity {
 
 
                 } else {
+                    progressDialog.dismiss();//if pertaining ay error
                     Toast.makeText(UploadingNotices.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
                 }
             }
