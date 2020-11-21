@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     CardView uploadNotice;
     CardView addImage;
     Intent intent;
+    CardView addEbook;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         uploadNotice = (CardView) findViewById(R.id.addingNotice);
         addImage = (CardView) findViewById(R.id.addImage);
+        addEbook = (CardView) findViewById(R.id.addEbook);
         uploadNotice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -50,7 +52,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        addEbook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(getApplicationContext(), UploadEbook.class);
+                startActivity(intent);
+            }
+        });
 
         //connecting variables to their respective widget using id in activity main file
        /* sroll = (EditText)findViewById(R.id.username);

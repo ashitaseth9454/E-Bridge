@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
@@ -160,7 +161,23 @@ public class UploadImage extends AppCompatActivity {
     private void uploadData() {
         databaseReference = databaseReference.child(categorySelected);//storing in the category that the user has selected
         //defining uniqueKey
-        final String uniqueKey;
+        final String uniqueKey = databaseReference.push().getKey();
+
+        databaseReference.child(uniqueKey).setValue(downloadImageURL).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                progressDialog.dismiss();
+                Toast.makeText(UploadImage.this, "Image Uploaded Successfully!", Toast.LENGTH_SHORT).show();
+
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                progressDialog.dismiss();
+                Toast.makeText(UploadImage.this, "Upload Failed!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
     }
