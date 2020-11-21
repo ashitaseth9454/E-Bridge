@@ -12,10 +12,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
@@ -25,6 +28,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
+import java.util.HashMap;
 
 public class UploadEbook extends AppCompatActivity {
     //Request Code
@@ -54,7 +58,8 @@ public class UploadEbook extends AppCompatActivity {
         pdfTextView = (TextView) findViewById(R.id.pdfTextView);
         pdfTitle = (EditText) findViewById(R.id.pdfTitle);
         progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Uploading...");
+        progressDialog.setTitle("Please wait...");
+        progressDialog.setMessage("Uploading your File");
         databaseReference = FirebaseDatabase.getInstance().getReference().child("gallery");
         storageReference = FirebaseStorage.getInstance().getReference().child("gallery");
 
@@ -87,10 +92,12 @@ public class UploadEbook extends AppCompatActivity {
     }
 
     private void uploadPdf() {
+        progressDialog.show();
         StorageReference ref = storageReference.child("pdf/" + pdfName + "-" + System.currentTimeMillis());//we want the pdf name to ube unique so we used current time
         ref.putFile(pdfData).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
                 Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();//using taskSnapshot to get the url
                 while (!uriTask.isComplete())
                     ;// we want this loop to run till our task is finishes so we are using not of task complete
@@ -98,12 +105,42 @@ public class UploadEbook extends AppCompatActivity {
                 uploadData(String.valueOf(uri));
 
             }
+        }).addOnFailureListener(new OnFailureListener() {
+
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                progressDialog.dismiss();
+                Toast.makeText(UploadEbook.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
+            }
         });
 
 
     }
 
-    private void uploadData(String valueOf) {
+    private void uploadData(final String pdfUrl) {
+
+        //unique key
+        String uniqueKey = databaseReference.child("pdf").push().getKey();
+        //data will be store in hashmap
+        HashMap data = new HashMap();
+        data.put("pdfTitle", title);//key
+        data.put("pdfUrl", pdfUrl);//value
+        databaseReference.child("pdf").child(uniqueKey).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                progressDialog.dismiss();
+                Toast.makeText(UploadEbook.this, "File Uploaded Sucessfully!", Toast.LENGTH_SHORT).show();
+                pdfTitle.setText("");//Vapas empty ho jayega
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                progressDialog.dismiss();
+                Toast.makeText(UploadEbook.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
 
