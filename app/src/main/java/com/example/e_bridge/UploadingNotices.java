@@ -39,7 +39,7 @@ public class UploadingNotices extends AppCompatActivity {
     Bitmap image;
     EditText noticeTitle;
     Button uploadNoticeButton;
-    DatabaseReference databaseReference;
+    DatabaseReference databaseReference, dbref;
     StorageReference storageReference;
     String downloadImageURL = "";//if no image is uploaded then it will send empty String
     ProgressDialog progressDialog;
@@ -89,8 +89,8 @@ public class UploadingNotices extends AppCompatActivity {
 
     //storing data on firebase
     private void uploadData() {
-        databaseReference = databaseReference.child("Notice");
-        final String uniqueKey = databaseReference.push().getKey();
+        dbref = databaseReference.child("Notice");
+        final String uniqueKey = dbref.push().getKey();
         String title = noticeTitle.getText().toString();
 
         Calendar calForDate = Calendar.getInstance();
@@ -114,7 +114,7 @@ public class UploadingNotices extends AppCompatActivity {
         uniqueKey =key
         * */
         //passsing and storing data in firebase
-        databaseReference.child(uniqueKey).setValue(noticeData).addOnSuccessListener(new OnSuccessListener<Void>() {
+        dbref.child(uniqueKey).setValue(noticeData).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 progressDialog.dismiss();

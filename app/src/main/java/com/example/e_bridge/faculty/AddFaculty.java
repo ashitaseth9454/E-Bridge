@@ -13,12 +13,24 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.e_bridge.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -33,6 +45,11 @@ public class AddFaculty extends AppCompatActivity {
     ProgressDialog progressDialog;
     String categorySelected;
     Bitmap selectedImage = null;
+    String name, email, post, downloadImageUrl = "";
+
+    DatabaseReference databaseReference, dbref;
+    StorageReference storageReference;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +62,9 @@ public class AddFaculty extends AppCompatActivity {
         addFacultyPost = (EditText) findViewById(R.id.addFacultyPost);
         addFacultyCategory = (Spinner) findViewById(R.id.addFacutyCategory);
         progressDialog = new ProgressDialog(this);
+
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Faculty");
+        storageReference = FirebaseStorage.getInstance().getReference();
 
         addFacultyImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,9 +98,127 @@ public class AddFaculty extends AppCompatActivity {
                 categorySelected = categories.get(0);
             }
         });
+        addFacultyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkValidation();//checking if any fields is null or unfilled
+
+
+            }
+        });
 
 
     }
+
+    private void checkValidation() {
+        name = addFacultyName.getText().toString();
+        email = addFacultyEmail.getText().toString();
+        post = addFacultyPost.getText().toString();
+
+        if (name.isEmpty()) {
+            addFacultyName.setError("Empty!");
+            addFacultyName.requestFocus();
+
+        } else if (name.isEmpty()) {
+            addFacultyEmail.setError("Empty!");
+            addFacultyEmail.requestFocus();
+
+        } else if (name.isEmpty()) {
+            addFacultyPost.setError("Empty!");
+            addFacultyPost.requestFocus();
+
+        } else if (categorySelected.equals("Select Category")) {
+            Toast.makeText(this, "Select the Category!", Toast.LENGTH_SHORT).show();
+
+        } else if (selectedImage == null) {
+            progressDialog.setMessage("Uploading...");
+            progressDialog.show();
+            insertData();
+
+        } else {
+            progressDialog.setMessage("Uploading...");
+            progressDialog.show();
+            uploadImage();
+
+        }
+    }
+
+    private void uploadImage() {
+        progressDialog.setMessage("Uploading...");
+        progressDialog.show();
+        //compressing the image nad then storing it
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        selectedImage.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
+        byte[] finalImage = byteArrayOutputStream.toByteArray();
+        final StorageReference filePath;
+        //storing in firebase
+        filePath = storageReference.child("Faculty").child(finalImage + "jpg");
+        final UploadTask uploadTask = filePath.putBytes(finalImage);
+        uploadTask.addOnCompleteListener(AddFaculty.this, new OnCompleteListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                if (task.isSuccessful()) {
+                    uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            filePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    downloadImageUrl = String.valueOf(uri);
+                                    insertData();
+                                }
+                            });
+                        }
+                    });
+
+
+                } else {
+                    progressDialog.dismiss();//if pertaining ay error
+                    Toast.makeText(AddFaculty.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
+    }
+
+    private void insertData() {
+//teacher>category(CSE,ME...)>unique key>data of faculty
+        dbref = databaseReference.child(categorySelected);
+        final String uniqueKey = dbref.push().getKey();
+
+
+        //passing arguments to the notice data class
+        FacultyData facultyData = new FacultyData(name, email, post, downloadImageUrl, uniqueKey);
+        /*title-notice title
+        downloadImageUrl= Bitmao image compressed and converted to url
+        date= dat
+        time=time
+        uniqueKey =key
+        * */
+        //passsing and storing data in firebase
+        dbref.child(uniqueKey).setValue(facultyData).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                progressDialog.dismiss();
+                Toast.makeText(AddFaculty.this, "Faculty Details Uploaded", Toast.LENGTH_SHORT).show();
+                addFacultyEmail.setText("");
+                addFacultyName.setText("");
+                addFacultyPost.setText("");
+
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                progressDialog.dismiss();
+                Toast.makeText(AddFaculty.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+    }
+
 
     private void openGallery() {
 
@@ -103,5 +241,6 @@ public class AddFaculty extends AppCompatActivity {
             addFacultyImage.setImageBitmap(selectedImage);
         }
     }
+
 
 }
