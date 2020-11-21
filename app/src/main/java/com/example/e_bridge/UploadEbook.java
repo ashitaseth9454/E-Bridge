@@ -10,15 +10,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 
@@ -31,6 +35,7 @@ public class UploadEbook extends AppCompatActivity {
     TextView pdfTextView;
     Uri pdfData;
 
+    String title;
 
     String pdfName;
     String downloadImageURL = "";//if no image is uploaded then it will send empty String
@@ -53,6 +58,23 @@ public class UploadEbook extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference().child("gallery");
         storageReference = FirebaseStorage.getInstance().getReference().child("gallery");
 
+        uploadPdfButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //checking if the user has uploaded pdf and title or not
+                title = pdfTitle.getText().toString();
+                if (title.isEmpty()) {
+                    pdfTitle.setError("Empty");
+                    pdfTitle.requestFocus();
+
+                } else if (pdfData == null) {
+                    Toast.makeText(UploadEbook.this, "Please Upload the File!", Toast.LENGTH_SHORT).show();
+                } else {
+                    uploadPdf();
+                }
+            }
+        });
+
 
         uploadPdf.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +84,26 @@ public class UploadEbook extends AppCompatActivity {
         });
 
 
+    }
+
+    private void uploadPdf() {
+        StorageReference ref = storageReference.child("pdf/" + pdfName + "-" + System.currentTimeMillis());//we want the pdf name to ube unique so we used current time
+        ref.putFile(pdfData).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();//using taskSnapshot to get the url
+                while (!uriTask.isComplete())
+                    ;// we want this loop to run till our task is finishes so we are using not of task complete
+                Uri uri = uriTask.getResult();
+                uploadData(String.valueOf(uri));
+
+            }
+        });
+
+
+    }
+
+    private void uploadData(String valueOf) {
     }
 
 
