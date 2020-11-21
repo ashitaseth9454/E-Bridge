@@ -22,21 +22,36 @@ public class MainActivity extends AppCompatActivity {
       private Button login;
       private int counter = 5;*/
     CardView uploadNotice;
+    CardView addImage;
+    Intent intent;
 
     @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         uploadNotice = (CardView) findViewById(R.id.addingNotice);
+        addImage = (CardView) findViewById(R.id.addImage);
         uploadNotice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), UploadingNotices.class);
+                intent = new Intent(getApplicationContext(), UploadingNotices.class);
                 startActivity(intent);
 
             }
         });
+
+
+        addImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(getApplicationContext(), UploadImage.class);
+                startActivity(intent);
+            }
+        });
+
+
         //connecting variables to their respective widget using id in activity main file
        /* sroll = (EditText)findViewById(R.id.username);
         //typecasting in EditText incase we see any error due to the input
