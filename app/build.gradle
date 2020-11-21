@@ -38,4 +38,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
 // Adding mateial theem dependency
     implementation 'com.google.android.material:material:1.0.0'
+    implementation 'de.hdodenhof:circleimageview:3.0.1'
 }
