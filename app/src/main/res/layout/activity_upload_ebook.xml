@@ -14,7 +14,7 @@
 
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/selectImage"
+            android:id="@+id/uploadPdf"
             android:layout_width="170dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -38,7 +38,7 @@
                     android:layout_gravity="center"
                     android:background="@drawable/color_pinl"
                     android:padding="15dp"
-                    android:src="@drawable/ic_addimage" />
+                    android:src="@drawable/ic_pdf" />
 
                 <View
                     android:layout_width="match_parent"
@@ -52,7 +52,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
                     android:padding="5dp"
-                    android:text="Select Image"
+                    android:text="Select Pdf"
                     android:textColor="@color/textColor"
                     android:textSize="20sp"
                     android:textStyle="bold"
@@ -70,33 +70,23 @@
             android:layout_marginTop="15dp">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/noticeTitle"
+                android:id="@+id/pdfTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Notice Title" />
+                android:hint="Pdf Title" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/uploadNoticeButton"
+            android:id="@+id/uploadPdfButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:text="Upload Notice"
+            android:text="Upload Pdf"
             android:textAllCaps="false">
 
         </com.google.android.material.button.MaterialButton>
 
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="350dp"
-            android:layout_marginTop="15dp">
 
-            <ImageView
-                android:id="@+id/noticeImageView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop" />
-        </com.google.android.material.card.MaterialCardView>
 
 
     </LinearLayout>

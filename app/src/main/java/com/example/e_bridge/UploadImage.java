@@ -34,11 +34,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class UploadImage extends AppCompatActivity {
-    final int REQ = 1;
     CardView addGalleryImage;
     Spinner categoryOfImage;
     Button uploadImageFromGalleryButton;
     ImageView galleryImageView;
+
+    final int REQ = 1;
     Bitmap selectedImage;
 
 
