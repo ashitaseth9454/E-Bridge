@@ -2,13 +2,14 @@ package com.example.e_bridge;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.OpenableColumns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +20,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
+
 public class UploadEbook extends AppCompatActivity {
     //Request Code
     final int REQ = 1;
@@ -28,6 +31,8 @@ public class UploadEbook extends AppCompatActivity {
     TextView pdfTextView;
     Uri pdfData;
 
+
+    String pdfName;
     String downloadImageURL = "";//if no image is uploaded then it will send empty String
     //making a progress dialog
     ProgressDialog progressDialog;
@@ -47,6 +52,7 @@ public class UploadEbook extends AppCompatActivity {
         progressDialog.setMessage("Uploading...");
         databaseReference = FirebaseDatabase.getInstance().getReference().child("gallery");
         storageReference = FirebaseStorage.getInstance().getReference().child("gallery");
+
 
         uploadPdf.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,9 +89,24 @@ public class UploadEbook extends AppCompatActivity {
             pdfData = data.getData();//data taken from Intent data(Argument passed in this method)
 
 //showing what is in out pdf data(being uploaded by the  user)
-            Toast.makeText(this, "Selected Pdf" + pdfData, Toast.LENGTH_SHORT).show();
+            if (pdfData.toString().startsWith("content://")) {
+                Cursor c = null;
 
+                try {
+                    c = UploadEbook.this.getContentResolver().query(pdfData, null, null, null, null);
+                    //condition
+                    if (c != null && c.moveToFirst()) {
+                        pdfName = c.getString(c.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
+            } else if (pdfData.toString().startsWith("file://")) {
+                pdfName = new File(pdfData.toString()).getName();
+
+            }
+            pdfTextView.setText(pdfName);//set text to pdf text view
         }
     }
 }
