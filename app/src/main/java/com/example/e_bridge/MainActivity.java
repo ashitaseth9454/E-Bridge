@@ -8,7 +8,7 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
-import com.example.e_bridge.faculty.AddFaculty;
+import com.example.e_bridge.faculty.UpdateFaculty;
 
 //implements View.OnClickListener
 
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         faculty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent = new Intent(getApplicationContext(), AddFaculty.class);
+                intent = new Intent(getApplicationContext(), UpdateFaculty.class);
                 startActivity(intent);
             }
         });
