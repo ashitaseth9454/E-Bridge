@@ -8,6 +8,8 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import com.example.e_bridge.faculty.AddFaculty;
+
 //implements View.OnClickListener
 
 public class MainActivity extends AppCompatActivity {
@@ -23,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
       private int counter = 5;*/
     CardView uploadNotice;
     CardView addImage;
+    CardView faculty;
     Intent intent;
     CardView addEbook;
 
@@ -35,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         uploadNotice = (CardView) findViewById(R.id.addingNotice);
         addImage = (CardView) findViewById(R.id.addImage);
         addEbook = (CardView) findViewById(R.id.addEbook);
+        faculty = (CardView) findViewById(R.id.faculty);
         uploadNotice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,6 +60,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 intent = new Intent(getApplicationContext(), UploadEbook.class);
+                startActivity(intent);
+            }
+        });
+        faculty.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(getApplicationContext(), AddFaculty.class);
                 startActivity(intent);
             }
         });

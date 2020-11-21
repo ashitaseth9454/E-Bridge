@@ -12,7 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UploadEbook"></activity>
+        <activity android:name=".faculty.UpdateFaculty"></activity>
+        <activity android:name=".faculty.AddFaculty" />
+        <activity android:name=".faculty.InputActivity" />
+        <activity android:name=".UploadEbook" />
         <activity android:name=".UploadImage" />
         <activity android:name=".UploadingNotices" />
         <activity android:name=".UploadNotice" />
