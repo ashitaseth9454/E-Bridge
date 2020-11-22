@@ -1,6 +1,8 @@
 package com.example.e_bridge.faculty;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -198,22 +200,40 @@ public class UpdateFacultyActivity extends AppCompatActivity {
 
 
     private void deleteData() {
-        databaseReference.child(category).child(uniqueKey).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
+        new AlertDialog.Builder(this)
+                .setTitle("Delete Faculty Details")
+                .setMessage("Are you sure you want to delete this?")
+                .setIcon(android.R.drawable.ic_delete)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        progressDialog.setMessage("Deleting...");
+                        progressDialog.show();
+                        databaseReference.child(category).child(uniqueKey).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
 
-            public void onComplete(@NonNull Task<Void> task) {
-                Toast.makeText(UpdateFacultyActivity.this, "Faculty Details Deleted", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(UpdateFacultyActivity.this, UpdateFaculty.class);
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Toast.makeText(UpdateFacultyActivity.this, "Faculty Details Deleted", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(UpdateFacultyActivity.this, UpdateFaculty.class);
 
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(UpdateFacultyActivity.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
-            }
-        });
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(UpdateFacultyActivity.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(UpdateFacultyActivity.this, "Not Deleted!", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
 
 
     }
