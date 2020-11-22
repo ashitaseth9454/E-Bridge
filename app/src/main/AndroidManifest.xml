@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".faculty.UpdateFacultyActivity"></activity>
+        <activity android:name=".notice.DeleteNotice"></activity>
+        <activity android:name=".faculty.UpdateFacultyActivity" />
         <activity android:name=".faculty.UpdateFaculty" />
         <activity android:name=".faculty.AddFaculty" />
         <activity android:name=".faculty.InputActivity" />
