@@ -54,7 +54,7 @@ public class UpdateFaculty extends AppCompatActivity {
         meNoData = (LinearLayout) findViewById(R.id.meNoData);
         otherNoData = (LinearLayout) findViewById(R.id.otherNoData);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("faculty");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Faculty");
 
         cseDepartment();
         eceDepartment();

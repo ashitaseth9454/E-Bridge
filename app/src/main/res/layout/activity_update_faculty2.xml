@@ -9,7 +9,7 @@
 
     <!--circle image view-->
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/updateTeacherImage"
+        android:id="@+id/updateFacultyImage"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_gravity="center_horizontal"
