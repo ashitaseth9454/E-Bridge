@@ -60,7 +60,7 @@ public class AddFaculty extends AppCompatActivity {
         addFacultyName = (EditText) findViewById(R.id.addFacultyName);
         addFacultyEmail = (EditText) findViewById(R.id.addFacultyEmail);
         addFacultyPost = (EditText) findViewById(R.id.addFacultyPost);
-        addFacultyCategory = (Spinner) findViewById(R.id.addFacutyCategory);
+        addFacultyCategory = (Spinner) findViewById(R.id.addFacultyCategory);
         progressDialog = new ProgressDialog(this);
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Faculty");
@@ -119,11 +119,11 @@ public class AddFaculty extends AppCompatActivity {
             addFacultyName.setError("Empty!");
             addFacultyName.requestFocus();
 
-        } else if (name.isEmpty()) {
+        } else if (email.isEmpty()) {
             addFacultyEmail.setError("Empty!");
             addFacultyEmail.requestFocus();
 
-        } else if (name.isEmpty()) {
+        } else if (post.isEmpty()) {
             addFacultyPost.setError("Empty!");
             addFacultyPost.requestFocus();
 

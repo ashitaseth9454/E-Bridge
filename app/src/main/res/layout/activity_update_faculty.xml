@@ -18,4 +18,263 @@
         android:src="@drawable/ic_add"
         app:fabSize="normal" />
 
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="Computer Science engineering"
+                android:textColor="@color/textColor"
+                android:textSize="22sp"
+                android:textStyle="italic" />
+            <!-- drawinga line-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="5dp"
+                android:background="@color/GreyColor" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/cseDept"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:visibility="gone" />
+            <!--iske andar nahi chahiey scrolling-->
+            <LinearLayout
+                android:id="@+id/cseNoData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/no_data_found" />
+
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:text="Mechanical Engineering"
+                android:textColor="@color/textColor"
+                android:textSize="22sp"
+                android:textStyle="italic" />
+            <!-- drawinga line-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="5dp"
+                android:background="@color/GreyColor" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/meDept"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:visibility="gone" />
+            <!--iske andar nahi chahiey scrolling-->
+            <LinearLayout
+                android:id="@+id/meNoData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/no_data_found" />
+
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:text="Civil Enginnering"
+                android:textColor="@color/textColor"
+                android:textSize="22sp"
+                android:textStyle="italic" />
+            <!-- drawinga line-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="5dp"
+                android:background="@color/GreyColor" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/ceDept"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:visibility="gone" />
+            <!--iske andar nahi chahiey scrolling-->
+            <LinearLayout
+                android:id="@+id/ceNoData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/no_data_found" />
+
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="Electical and Communication engineering"
+                android:textColor="@color/textColor"
+                android:textSize="22sp"
+                android:textStyle="italic" />
+            <!-- drawinga line-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="5dp"
+                android:background="@color/GreyColor" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/eceDept"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:visibility="gone" />
+            <!--iske andar nahi chahiey scrolling-->
+            <LinearLayout
+                android:id="@+id/eceNoData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/no_data_found" />
+
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="Specialization in CCV"
+                android:textColor="@color/textColor"
+                android:textSize="22sp"
+                android:textStyle="italic" />
+            <!-- drawinga line-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="5dp"
+                android:background="@color/GreyColor" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/ccvDept"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:visibility="gone" />
+            <!--iske andar nahi chahiey scrolling-->
+            <LinearLayout
+                android:id="@+id/ccvNoData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/no_data_found" />
+
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="Other Departments"
+                android:textColor="@color/textColor"
+                android:textSize="22sp"
+                android:textStyle="italic" />
+            <!-- drawinga line-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="5dp"
+                android:background="@color/GreyColor" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/otherDept"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:visibility="gone" />
+            <!--iske andar nahi chahiey scrolling-->
+            <LinearLayout
+                android:id="@+id/otherNoData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/no_data_found" />
+
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="Specialization in Cyber Security"
+                android:textColor="@color/textColor"
+                android:textSize="22sp"
+                android:textStyle="italic" />
+            <!-- drawinga line-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="5dp"
+                android:background="@color/GreyColor" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/cyberDept"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:visibility="gone" />
+            <!--iske andar nahi chahiey scrolling-->
+            <LinearLayout
+                android:id="@+id/cyberNoData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/no_data_found" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
